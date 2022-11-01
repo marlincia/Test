@@ -1,0 +1,14 @@
+[dellos]
+dell1 ansible_host=192.168.200.1
+dell2 ansible_host=192.168.200.2
+#dell3 ansible_host=192.168.200.3
+
+[dellos:vars]
+ansible_ssh_user=Dell
+ansible_ssh_pass=P@$$w0rd
+ansible_ssh_becom=yes
+ansible_become_method=enable
+ansible_network_os=dellemc.os6.os6
+ansible_connection=network_cli
+ansible_command_timeout=30
+ansible_interpreter_python=/usr/bin/python3

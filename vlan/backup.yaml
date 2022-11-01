@@ -1,0 +1,17 @@
+---
+- name: Backup Switchs-DELL_N1524
+  hosts: dellos
+  gather_facts: false
+  vars:
+    backup_dir: "/"
+  become: yes
+  become_method: enable
+  connection: local
+  collections:
+    - dellemc.os6.os6_config
+  tasks:
+    - name: Backup
+      dellos6_config:
+        backup: yes
+        backup_options:
+          dir_path: "{{backup_dir}}"

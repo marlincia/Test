@@ -1,0 +1,28 @@
+---
+- hosts: dellos
+  connection: network_cli
+  gather_facts: no
+  
+  tasks:
+  - name: "Gett Dell EMS OS6 show version"
+    dellos6_command:
+      commands: ['show version']
+  - name: "run show version and check to see if output contains Dell"
+    dellos6_command:
+      commands: ['show version']
+      wait_for: result[0] contains Dell
+
+  - name: "run multiple commands on remote nodes"
+    dellos6_command:
+      commands: 
+        - show version
+        - show interfaces
+
+  - name: "Gett Dell EMS OS6 show vlan"
+    dellos6_command:
+      commands:
+       - show version
+       - show interfaces
+      wait_for:
+       - result[0] contains Dell
+       - result[1] contains Access

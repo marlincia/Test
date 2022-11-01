@@ -1,0 +1,24 @@
+---
+- hosts: dellos
+  connection: network_cli
+  gather_facts: no
+  
+  tasks:
+  - name: "Gett Dell EMS OS6 show version"
+    dellos6_command:
+      commands: ['show version']
+    register: show_ver
+  - debug: var=show_ver
+
+  - name: "Gett Dell EMS OS6 show run"
+    dellos6_command:
+      commands: ['show system']
+    register: show_sys
+  - debug: var=show_sys
+
+  - name: "Gett Dell EMS OS6 show vlan"
+    dellos6_command:
+      commands: ['show vlan']
+    register: show_vlan
+  - debug: var=show_vlan
+

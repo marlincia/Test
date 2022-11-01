@@ -1,0 +1,38 @@
+---
+- hosts:all
+  gather_facts: false
+  connexion: local
+  
+  vars:
+    cli:
+      username: Dell
+      password: P@$$w0rd
+    
+    vlans:
+       20: "Core"
+       30: "Monitoring"
+       40: "Access"
+       50: "Wifi"
+  
+  tasks:
+  
+    - name: create vlans
+      os6_config:
+      #ios_config : if the cisco switch
+        proviser: "{{cli}}"
+        lines:
+          - name {{item.value}}
+        parents:
+          - vlan {{item.key}}
+      with_dict: "{{vlans}}"
+      
+    - name: show vlan
+      os6_command:
+        provider: "{{cli}}"
+        commands: show vlan
+       
+      register: show_vlan
+       
+    - name: print output to source
+      debug:
+        var=show_vlan.stoud
