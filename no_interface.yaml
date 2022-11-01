@@ -1,0 +1,34 @@
+---
+- name: affect insterface
+  hosts: dellos
+  gather_facts: false
+  connection: network_cli
+  
+  vars:
+    cli:
+      username: Dell
+      password: P@$$w0rd
+
+#    vlans: 300
+  
+  tasks:
+  - name: Ensure the port Gi3 is not affect in the vlan
+    dellemc.os6.os6_config:
+      provider: "{{cli}}"
+      save: true
+      lines:
+       - no switchport access vlan
+      parents: '{{ item }}'
+    with_items:
+      - interface Gi1/0/3
+
+  - name: Delete port-channel 2
+    dellemc.os6.os6_config:
+      provider: "{{cli}}"
+      save: true
+      lines:
+       - no channel-group 2
+      parents: '{{ item }}'
+    with_items:
+      - interface Gi1/0/3
+      - interface Gi1/0/4

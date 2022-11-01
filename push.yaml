@@ -1,0 +1,15 @@
+---
+- name: push config 
+  hosts: dell2
+  connection: network_cli
+  gather_facts: false
+  
+  tasks:
+  - name: push file configuration
+    dellos6_config:
+       backup: yes
+       replace: line
+       src: "/root/DELLEMC/roles/startup-config"
+       match: line
+       update: merge
+       save: yes

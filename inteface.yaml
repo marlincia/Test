@@ -1,0 +1,36 @@
+---
+- name: affect insterface
+  hosts: dellos
+  gather_facts: false
+  connection: network_cli
+  
+  vars:
+    cli:
+      username: Dell
+      password: P@$$w0rd
+
+    vlans: 300
+  
+  tasks:
+#  - name: Ensure GigabitEthernet0/5 is configured for access vlan 10
+#    dellemc.os6.os6_config:
+#      backup: yes
+#      src: dellos_template.j2
+
+  - name: Ensure GigabitEthernet0/5 is configured for access vlan 10
+    dellemc.os6.os6_config:
+      provider: "{{cli}}"
+      lines:
+       - interface Gi1/0/17
+       - switchport access vlan 300
+       - interface Gi1/0/18
+       - switchport access vlan 300
+      parents:
+       - vlan {{vlans}}
+
+  - name: Ensure GigabitEthernet0/5 is configured for access vlan 10
+    dellemc.os6.os6_config:
+      backup: yes
+      backup_options:
+         filename: config.cfg
+         dir_path: /root/DELLEMC

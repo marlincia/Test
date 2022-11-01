@@ -1,0 +1,31 @@
+---
+- name: affect insterface
+  hosts: dellos
+  gather_facts: false
+  connection: network_cli
+  
+  vars:
+    cli:
+      username: Dell
+      password: P@$$w0rd
+  
+  tasks:
+  - name: Configure LAG in the range port 3 & 4 
+    dellemc.os6.os6_config:
+      provider: "{{cli}}"
+      save: yes
+      lines:
+       - channel-group 2 mode active
+       - switchport mode trunk
+      parents:
+       - interface Gi1/0/3
+       - interface Gi1/0/4
+
+  - name: Configure port channel-group
+    dellemc.os6.os6_config:
+      provider: "{{cli}}"
+      save: yes
+      lines:
+       - switchport mode trunk
+      parents:
+       - interface port-channel 2

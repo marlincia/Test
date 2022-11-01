@@ -1,0 +1,19 @@
+---
+- name: affect insterface
+  hosts: dellos
+  gather_facts: false
+  connection: network_cli
+  
+  vars:
+    cli:
+      username: Dell
+      password: P@$$w0rd
+  
+  tasks:
+  - name: Ensure GigabitEthernet0/5 is configured for access vlan 10
+    dellemc.os6.os6_config:
+      provider: "{{cli}}"
+      lines:
+       - interface Gi1/0/3
+       - switchport mode trunk
+
