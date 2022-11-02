@@ -1,7 +1,7 @@
 node {
     stage('Clone Repo') { 
         
-        git 'https://github.com/marlincia/NetOps.git'
+        git 'https://github.com/marlincia/Test.git'
 
     }
     stage('Ansible Running') {
